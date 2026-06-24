@@ -1,0 +1,60 @@
+Project Workspace Setup Report
+
+1.Create Directory Structure:
+  Command: $ mkdir -p ProjectWorkspace/Documents
+           $ mkdir ProjectWorkspace/ProjectFiles
+           $ cd ProjectWorkspace
+           $ touch ProjectWorkspaceReport.txt
+           $ ls -R 
+  Output:
+.:
+Documents  ProjectFiles  ProjectWorkspaceReport.txt
+
+./Documents:
+
+./ProjectFiles:
+
+OR 
+  Command:$ tree
+.
+├── Documents
+├── ProjectFiles
+└── ProjectWorkspaceReport.txt
+
+3 directories, 1 file
+3 directories, 0 files
+
+  Explanation: The main workspace directory ProjectWorkspace is created in which there are separate directories for documents and project files. To show the structure of the parent directory ProjectWorkspace, we can use two commands. First using the ls command with option -R recursively lists the files and folders inside it. Second, when using the tree command, we can see the visual structure of the ProjectWorkspace directory.
+
+2.File Permission:
+  Before modification:
+    command:$ ls -ld ProjectWorkspace
+    output: drwxr-xr-x 4 krity krity 4096 Jun 24 12:04 ProjectWorkspace
+     
+
+  After Modification:
+    command:$ chmod 740 ProjectWorkspace/
+            $ ls -ld ProjectWorkspace
+     Output: drwxr----- 4 krity krity 4096 Jun 24 12:04 ProjectWorkspace
+
+ Explanation: Before modification on permission of the ProjectWorkspace Directory, we see that the owner has permission to read, write and execute files, the group and others can read and execute in this directory. To change the permission, we use chmod command with numeric mode. Here we use chmod 740 to change the permission of group to only read and others to do nothing. Each digit in the numerical mode represents what permissions owner, group and tothers get respectively.
+
+
+3.Ownership Detail:
+  command:$ ls -l
+  output:
+total 8
+drwxr----- 4 krity krity 4096 Jun 24 12:04 ProjectWorkspace
+-rw-r--r-- 1 krity krity  974 Jun 24 13:33 ProjectWorkspaceReport.txt
+  Explanation: To show the ownership detail, ls -l is used which displays the long format list of files and directories. Here we can see that owner for the directory and group is krity.
+
+4.Unmask:
+  Command: $ umask
+  Output: 0022
+  Explanation: umask can be used to remove default permissions 666 or 777 . The output is subtracted from previous permission and the result we get becomes the updated permission. In this case, 755 making the permission drwxr-xr-x.
+
+
+5.How Permissions protect project data:
+  Take a project file for example that is handled only by a certain group. If anyone even outside of the group is able to read or make changes to it, not only would it be difficult to control unwanted modifications to the data, it would also not be private. In order to protect it from unwanted chanages and modifications, we can change the permission to prevent unauthorised changes and leaks of information making it secure.
+  
+
