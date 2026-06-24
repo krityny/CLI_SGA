@@ -11,14 +11,16 @@ output shows that the user krity has administrative privileges and has access to
 2.Current Shell:
   Command: $ echo $SHELL
   Output: /bin/bash
-  Observation: The command $ echo $SHELL is used to display the current shell. Output shows that the shell currently used is bash, which is a default shell of most linux distributions.
+  Observation: The command $ echo $SHELL is used to display the current shell. Output shows that the shell currently used is bash, which is 
+a default shell of most linux distributions.
 
 3.Current Directory:
   Command: $ pwd
 /home/krity/SGA0/Q1
   Output:$ pwd
 /home/krity/SGA1/Q1
-  Observation: pwd (print working directory) displays the current directory we are in. It is used to identify the current location in the file system.
+  Observation: pwd (print working directory) displays the current directory we are in. It is used to identify the current location in the 
+file system.
 
 
 4.List of files and directories:
@@ -28,7 +30,8 @@ output shows that the user krity has administrative privileges and has access to
         drwxr-xr-x 3 krity krity 4096 Jun 24 05:20 ..
         -rw-r--r-- 1 krity krity  548 Jun 24 08:07 Environment_Report.txt
         -rw-r--r-- 1 krity krity   49 Jun 24 04:45 file1.txt 
-  Observation: ls command is used to diplay the files and directories we are working in. Here, -la option is used along with the ls command. The option -l us used to give a detailed list(long listing format) of the files and option -a is used to display hidden files.
+  Observation: ls command is used to diplay the files and directories we are working in. Here, -la option is used along with the ls command. 
+The option -l us used to give a detailed list(long listing format) of the files and option -a is used to display hidden files.
 
 5.Network connectivity verification:
   Command:  ping -c 3 www.coursera.org
@@ -41,7 +44,9 @@ output shows that the user krity has administrative privileges and has access to
    3 packets transmitted, 3 received, 0% packet loss, time 2004ms
    rtt min/avg/max/mdev = 62.552/64.750/66.671/1.692 ms
   
-  Observation: To check the network connectivity of the system, we use the "ping" command. Here the command is used along with the option -c which specifies the number of packages to be sent to the network. In this case all 3 packages were transmitted sucessfully to www.courera.org which means the system has internet connectivity.
+  Observation: To check the network connectivity of the system, we use the "ping" command. Here the command is used along with the option -c 
+which specifies the number of packages to be sent to the network. In this case all 3 packages were transmitted sucessfully to 
+www.courera.org which means the system has internet connectivity.
 
 
   
