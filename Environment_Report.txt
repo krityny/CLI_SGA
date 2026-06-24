@@ -1,0 +1,46 @@
+Linux Environment Report
+
+1.Username & Groups:
+  Command:$ id
+  Output: uid=1000(krity) gid=1000(krity) groups=1000(krity),4(adm),24(cdrom),27(sudo),
+   30(dip),46(plugdev),100(users)
+  Observation: The command "id" is used to display the user ID, username, group ID and accounts associated with the account. Here the output shows that the user krity has administrative privileges and has access to network, cdrom, and other removable devices.
+
+
+2.Current Shell:
+  Command: $ echo $SHELL
+  Output: /bin/bash
+  Observation: The command $ echo $SHELL is used to display the current shell. Output shows that the shell currently used is bash, which is a default shell of most linux distributions.
+
+3.Current Directory:
+  Command: $ pwd
+/home/krity/SGA0/Q1
+  Output:$ pwd
+/home/krity/SGA1/Q1
+  Observation: pwd (print working directory) displays the current directory we are in. It is used to identify the current location in the file system.
+
+
+4.List of files and directories:
+  Command: $ ls -la
+  Output: total 16
+        drwxr-xr-x 2 krity krity 4096 Jun 24 08:09 .
+        drwxr-xr-x 3 krity krity 4096 Jun 24 05:20 ..
+        -rw-r--r-- 1 krity krity  548 Jun 24 08:07 Environment_Report.txt
+        -rw-r--r-- 1 krity krity   49 Jun 24 04:45 file1.txt 
+  Observation: ls command is used to diplay the files and directories we are working in. Here, -la option is used along with the ls command. The option -l us used to give a detailed list(long listing format) of the files and option -a is used to display hidden files.
+
+5.Network connectivity verification:
+  Command:  ping -c 3 www.coursera.org
+  Output:  PING www-cloudfront-alias.coursera.org (108.159.80.55) 56(84) bytes of data.
+   64 bytes from server-108-159-80-55.bom78.r.cloudfront.net (108.159.80.55): icmp_seq=1 ttl=244 time=62.6 ms
+   64 bytes from server-108-159-80-55.bom78.r.cloudfront.net (108.159.80.55): icmp_seq=2 ttl=244 time=66.7 ms
+   64 bytes from server-108-159-80-55.bom78.r.cloudfront.net (108.159.80.55): icmp_seq=3 ttl=244 time=65.0 ms
+
+   --- www-cloudfront-alias.coursera.org ping statistics ---
+   3 packets transmitted, 3 received, 0% packet loss, time 2004ms
+   rtt min/avg/max/mdev = 62.552/64.750/66.671/1.692 ms
+  
+  Observation: To check the network connectivity of the system, we use the "ping" command. Here the command is used along with the option -c which specifies the number of packages to be sent to the network. In this case all 3 packages were transmitted sucessfully to www.courera.org which means the system has internet connectivity.
+
+
+  
