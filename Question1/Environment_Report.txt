@@ -5,7 +5,7 @@ Linux Environment Report
   Output: uid=1000(krity) gid=1000(krity) groups=1000(krity),4(adm),24(cdrom),27(sudo),
    30(dip),46(plugdev),100(users)
   Observation: The command "id" is used to display the user ID, username, group ID and accounts associated with the account. Here the 
-output shows that the user krity has administrative privileges and has access to network, cdrom, and other removable devices.
+output shows that the user krity has administrative privileges and has access to network, cdrom, and other removable devices. 
 
 
 2.Current Shell:
