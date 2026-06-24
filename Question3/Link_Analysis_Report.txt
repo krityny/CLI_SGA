@@ -1,0 +1,93 @@
+File System and Link Analysis Report
+
+
+1. Creating main file and its links:
+  Commands: $ echo "Link analysis" > MainFile.txt
+            $ cat MainFile.txt
+       output: Link analysis
+  Hardlink command:$ ln MainFile.txt Hardln.txt
+  Softlink command:$ ln -s MainFile.txt Softln.txt
+  Explanation: echo prints everything between "" and >MainFile.txt saves it into a file named MainFile.txt
+   cat MainFile.txt is used to print its content. The command ln <OriginalFile> <Hardlink file> is used to create a hard link of given original
+file. -s option is used in th ln command to create a softlink the same way.
+
+2. Inode Number of all files:
+   Command: ls -li
+   Output: total 8
+           45061 -rw-r--r-- 2 krity krity 14 Jun 24 14:59 Hardln.txt
+           45061 -rw-r--r-- 2 krity krity 14 Jun 24 14:59 MainFile.txt
+           45169 lrwxrwxrwx 1 krity krity 12 Jun 24 15:02 Softln.txt -> MainFile.txt
+   Explanation: The option -li is used with ls command to get detailed list of files including the inode number of each file. In the output, we 
+can see that the original file and hardlink both have same inode number while the softlink has a different one. we can also see that there are 2
+files pointing to the inode 45061, or that the file MainFile and Hardln are links of eachother.
+
+3. Comparision between hard and soft links:
+   Hardlink                                    Softlink
+ a.Inode number same as the original file      a.Inode Number different from the original file.
+ b.File size same as original file             b.File size different
+ c.creates a new reference to the physical     c.Contains the path of the original file
+data on the disk as in the original file. 
+d.can only be created within the same file     d.Can span across the file systems and also point to files that don't exist.
+  system
+
+4. Effect after Deleting original file:
+   command:$ rm MainFile.txt
+           $ ls -li
+   Output: 
+total 4
+45061 -rw-r--r-- 1 krity krity 14 Jun 24 14:59 Hardln.txt
+45169 lrwxrwxrwx 1 krity krity 12 Jun 24 15:02 Softln.txt -> MainFile.txt
+  Command: $ cat Hardln.txt
+  Output: Link analysis
+  Command: $ cat Softln.txt
+  Output: cat: Softln.txt: No such file or directory
+Explanation: The command rm is used to delete MainFile.txt. On doing so, we see that the hardlink file still has the same content. But when 
+trying to view the contents of the softlink, it says the file doesn't exist. Since a softlink contains the path to the original file, once the
+original file is deleted, the softlink cannot be accessed too.
+
+5. Metadata:
+  (For MainFile) Command: $ stat MainFile.txt
+   Output:
+  File: MainFile.txt
+  size: 14              Blocks: 8          IO Block: 4096   regular file
+Device: 8,48    Inode: 45204       Links: 1
+Access: (0644/-rw-r--r--)  Uid: ( 1000/   krity)   Gid: ( 1000/   krity)
+Access: 2026-06-24 15:13:05.604906371 +0000
+Modify: 2026-06-24 15:13:05.604906371 +0000
+Change: 2026-06-24 15:13:05.604906371 +0000
+ Birth: 2026-06-24 15:13:05.604906371 +0000
+
+  (For Hardlink) Command: $ stat Hardln.txt
+   Output:
+  File: Hardln.txt
+  size: 14              Blocks: 8          IO Block: 4096   regular file
+Device: 8,48    Inode: 45061       Links: 1
+Access: (0644/-rw-r--r--)  Uid: ( 1000/   krity)   Gid: ( 1000/   krity)
+Access: 2026-06-24 15:05:56.048910196 +0000
+Modify: 2026-06-24 14:59:38.724911592 +0000
+Change: 2026-06-24 15:05:17.256910713 +0000
+ Birth: 2026-06-24 14:59:38.724911592 +0000
+
+   (For Softlink) Command: $ stat Softln.txt
+   Output:
+  File: 'Softln.txt' -> 'MainFile.txt'
+  size: 12              Blocks: 0          IO Block: 4096   symbolic link
+Device: 8,48    Inode: 45169       Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: ( 1000/   krity)   Gid: ( 1000/   krity)
+Access: 2026-06-24 15:03:43.272911806 +0000
+Modify: 2026-06-24 15:02:23.436911984 +0000
+Change: 2026-06-24 15:02:23.436911984 +0000
+ Birth: 2026-06-24 15:02:23.436911984 +0000
+
+Explanation: The command to view the metadata of a file is stat [filename]. In the output we can see various details of the file like the time
+it as last accessed, modified, when it was created, what kind of file it is, its inode number etc. The link count in MainFile and Hardln changed
+to 1 after deleting the MainFile. The file type for both original and hardlink files show as regular file whereas the softlink shows as a symbolic link.
+
+6. Conclusion: 
+  A hardlink is like a clone of a file containing same physical data. But a soft link is like a sortcut containing the path to the 
+original file. Incase an original file is deleted, as long as we have made its hardlink, we can still get the deleted data from it. But if we
+only have a softlike, the path would be deleted and would be of no use. Any modifications made in either the links or original file shows in 
+the other too.
+
+  
+  
