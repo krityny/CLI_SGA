@@ -1,0 +1,73 @@
+IO Investigation Report
+
+1.Open Files Investigation:
+  Command: $ lsof | head
+  Output: COMMAND    PID  TID TASKCMD              USER   FD      TYPE  DEVICE SIZE/OFF  NODE NAME
+systemd      1                           root  cwd   unknown                                 /proc/1/cwd (readlink: Permission denied)
+systemd      1                           root  rtd   unknown                                 /proc/1/root (readlink: Permission denied)
+systemd      1                           root  txt   unknown                                 /proc/1/exe (readlink: Permission denied)
+systemd      1                           root NOFD      0000                                 /proc/1/fd (opendir: Permission denied)
+init         7                           root  cwd   unknown                                 /proc/7/cwd (readlink: Permission denied)
+init         7                           root  rtd   unknown                                 /proc/7/root (readlink: Permission denied)
+init         7                           root  txt   unknown                                 /proc/7/exe (readlink: Permission denied)
+init         7                           root NOFD      0000                                 /proc/7/fd (opendir: Permission denied)
+init         7    8 init                 root  cwd   unknown                                 /proc/7/task/8/cwd (readlink: Permission denied)
+
+Explanation: To investigate the open files, command lsof (list open files) is used along with head to display only the first 10 output. As 
+linux treats all running processes as an open file, lsof command can keep giving outputs so to limit the output we use head option with it.
+
+2. File Descriptor Observation:
+   Command: $ ls -l /proc/self/fd
+   Output: 
+  total 0
+lrwx------ 1 krity krity 64 Jun 24 17:07 0 -> /dev/pts/2
+lrwx------ 1 krity krity 64 Jun 24 17:07 1 -> /dev/pts/2
+lrwx------ 1 krity krity 64 Jun 24 17:07 2 -> /dev/pts/2
+lr-x------ 1 krity krity 64 Jun 24 17:07 3 -> /proc/3918/fd
+
+Explanation: The command used is to display a detailed list of file descriptors in the current process ls. Here we see the descriptor 0 
+(stdin/keyboard), 1 (stdout/normal outout), 2(stderr/error output) and 3 (current process)is connected to the terminal.
+
+3. Output and Error Redirection:
+    (For Output)
+      Command: :$  echo "I/O Operation Test" > output.txt
+                 $ cat output.txt
+      output: I/O Operation Test
+     (For Error): 
+      Command:$ ls missing_file.txt 2> error.txt
+              $ cat error.txt
+      Output: ls: cannot access 'missing_file.txt': No such file or directory
+
+  Explanation: Here for output redirection, the output of echo command is redirected to the output.txt file, whose content is then printed 
+using the cat command followed by file name.
+   For error redirection, the error message from the ls missing-file.txt is redirected to error.txt file instead of being printed on the 
+screen. The contents from the error.txt file is then printed with the cat command.
+
+4. Resource Limit:
+   Command: ulimit -a
+   Output:
+real-time non-blocking time  (microseconds, -R) unlimited
+core file size              (blocks, -c) 0
+data seg size               (kbytes, -d) unlimited
+scheduling priority                 (-e) 0
+file size                   (blocks, -f) unlimited
+pending signals                     (-i) 31219
+max locked memory           (kbytes, -l) 65536
+max memory size             (kbytes, -m) unlimited
+open files                          (-n) 10240
+pipe size                (512 bytes, -p) 8
+POSIX message queues         (bytes, -q) 819200
+real-time priority                  (-r) 0
+stack size                  (kbytes, -s) 8192
+cpu time                   (seconds, -t) unlimited
+max user processes                  (-u) 31219
+virtual memory              (kbytes, -v) unlimited
+file locks                          (-x) unlimited
+
+Explanation: The command ulimit -a displays various limits of system resources like cpu time, file size, max memory size etc. From the 
+output we can see the maximum number of files a single process can open is 10240, maximum processes the user can run is 31219 and the 
+maximum file size, cpu time and file lock sare set to unlimited.
+
+5. How Linux Manages file IO:
+Linux uses file descriptors to manage input and output streams. The standard descriptors are 0 for input, 1 for normal output and 2 for error output. Accessing files for using read write or close commands is handles by the linux kernel.
+We can also redirect input and error using FD1 and FD2 respectively. Linux treats all processes as open files. If an application exceeds its open file limit, it may cause logging failures.
